@@ -1,0 +1,51 @@
+- hosts: all 
+
+  tasks:
+
+    ## ufw #############################################################
+
+    - name: ufw allow https
+      ufw:
+        rule: allow
+        port: 443
+        proto: tcp
+      become: true
+
+    - name: ufw allow torrent 
+      ufw:
+        rule: allow
+        port: 60000:61000
+        proto: tcp
+      become: true
+
+    ## rtorrent ###########################################################
+
+    - name: install rtorrent
+      apt:
+        name: rtorrent
+        state: latest
+      become: true
+
+    ## irssi ###########################################################
+
+    - name: install irssi
+      apt:
+        name: irssi
+        state: latest
+      become: true
+
+    ## screen ##########################################################
+
+    - name: install screen
+      apt:
+        name: screen
+        state: latest
+      become: true
+
+    ## vim ##########################################################
+
+    - name: install vim
+      apt:
+        name: vim
+        state: latest
+      become: true

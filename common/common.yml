@@ -1,0 +1,111 @@
+- hosts: all
+
+  tasks:
+
+    ## timezone ########################################################
+
+    - name: Set timezone variables
+      copy:
+        content: 'America/Phoenix'
+        dest: /etc/timezone
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - update timezone
+      become: true
+
+    ## apt #############################################################
+
+    - name: update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      become: true
+
+    ## resolveconf
+
+    - name: drop resolvconf
+      apt:
+        pkg: resolvconf
+        state: absent
+      become: true
+
+    ## dhcpcd ##########################################################
+
+    - name: uninstall dhcpcd
+      apt:
+        name: dhcpcd5
+        state: absent
+      become: true
+
+    ## ufw #############################################################
+
+    - name: install ufw
+      apt:
+        name: ufw
+        state: present
+      become: true
+
+    - name: ufw allow ssh
+      ufw:
+        rule: allow
+        port: 22
+        proto: tcp
+      become: true
+
+    - name: enable ufw
+      ufw:
+        state: enabled
+      become: true
+
+    ## ssh #############################################################
+
+    - name: Disallow password authentication
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^#?PasswordAuthentication"
+        line: "PasswordAuthentication no"
+        state: present
+      notify: restart ssh
+      become: true
+
+    - name: Disallow root SSH access
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin no"
+        state: present
+      notify: restart ssh
+      become: true
+
+    ## freddie ###########################################################
+
+    - name: Add account for  me
+      user:
+        name: freddie
+        generate_ssh_key: yes
+        ssh_key_bits: 4096
+      become: true
+
+    - name: Add authorized keys for freddie 
+      authorized_key:
+        user: freddie
+        key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8XRvJzYKZ1qnZvCLOD+OlvxEicUwZwCJnItSzMnH9o5ETON59jnJzIENpQzWnrA6wzk6GbcFO99gGWe1lq388s+0jL/54qPTidjnfEHOyIDMSBIqQ3/3KE4xLjOmcNuHwGPdBo9VV0z+fF6IeoXu6+aH6hLFMhhImLFu2OfdEMMboobH7l2zL7vJ6syLKJjbKYhNYSHe9HSMY/0MUoyVsVdDGOpAEnStnEbtDqSN9+oVySNUXcYgp7wWZ5xXCJDe4DPyDCyUMecpgT/F1CWDs3QGIN6AVyVLuRY4Da0C9XMj6PNZSG7lOxspmDaxm9xm5x+1LGsbjg8AFjDL01NsJuOUFxCOTbFcYIYElU11IjeUkjrCzDH4yxjF9JFtNpCnuDa8pwbQw97cpjJ/Ve2qC+41kpluSBcuhmiUNUkwT0dRwobWTJ3Lry55Ukp7OeLfxgfr8ZyPYQ3IZ9+iETn8iFpweTW5VBOoAj/3aLFCSC5KDvbNLuJsRow9g03AWlXVLTLXMTqW3avyyvongf9pmEHzyM2jIFUXXyRmNlgjoRnfo6klAyb9AI7fEm7YB2uFiH937cpE9y+Oj7952Do/A9nuQWFc7YQwL15baDrxtE3aAP4x6yfFDHiLCKhJQe/k2+UcBL1hs3f/R0VNJT3PyaGxky8Z3PGUl/9E2gq9yXQ=='
+      become: true
+
+  handlers:
+
+    ## timezone ########################################################
+
+    - name: update timezone
+      command: dpkg-reconfigure --frontend noninteractive tzdata
+      become: true
+
+    ## ssh #############################################################
+
+    - name: restart ssh
+      service:
+        name: ssh
+        state: restarted
+      become: true
