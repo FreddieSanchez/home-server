@@ -1,0 +1,80 @@
+- hosts: pis
+
+  tasks:
+
+    ## hostname ########################################################
+
+    - hostname: home-server
+        name: home-server 
+      become: true
+
+
+    ## ufw #############################################################
+
+    - name: ufw allow http
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp
+      become: true
+
+    - name: ufw allow https
+      ufw:
+        rule: allow
+        port: 443
+        proto: tcp
+      become: true
+
+    ## irssi ###########################################################
+
+    - name: install irssi
+      apt:
+        name: irssi
+        state: latest
+      become: true
+
+    ## screen ##########################################################
+
+    - name: install screen
+      apt:
+        name: screen
+        state: latest
+      become: true
+
+    ## freddie ###########################################################
+
+    - name: Add account for freddie
+      user:
+        name: freddie
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
+      become: true
+
+    - name: Add authorized keys for freddie
+      authorized_key:
+        user: freddie
+        key: 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAnuNOCC2LCuAX9X3/waQ/JvbO1ZRg7lM2nsXUUpm8N//6BEWxnxkju2C6bQx7HQBaI339dDnjtP/dxwYxZYHSIdnjV4yb/x8fK1mmZReyGkrXZsQqZp8AuKFtc2xBUXjky0hTZEPenQnJLLxhuLKWz8xSHpD6RSmD9aTBxlsTzfoPoDBTvJ73XxbZROatASry9rt+IiFS27aLmGU3knouoZBt/Awwv4CMH/JWropAJVoeIkrTIvgMBLej6hffaM7bkl3S5CNZ4VvvCi6uXXofP16tNatql4vWj57gelQ8MhC9loH8FRErTF7RR4UNt0Ra+qzpU9Mrn9rOuxQwHMDvMQ=='
+      become: true
+
+    ## vim #########################################################
+
+    - name: install vim
+      apt:
+        name: vim
+        state: present
+      become: true
+
+    ## haskell #########################################################
+
+    - name: install ghc
+      apt:
+        name: ghc
+        state: present
+      become: true
+
+    - name: install cabal-install
+      apt:
+        name: cabal-install
+        state: present
+      become: true
+
