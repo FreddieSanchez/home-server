@@ -3,7 +3,7 @@
 mac_address_mapping:
   "b8:27:eb:26:a4:de":
     name: thesanch.com
-    ip: "192.168.1.15"
+    ip: "192.168.1.50"
   # Balancer over built-in LAN.
   "b8:27:eb:73:f1:8b":
     name: thesanch.com
