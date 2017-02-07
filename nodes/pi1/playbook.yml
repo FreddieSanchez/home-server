@@ -50,6 +50,13 @@
         state: latest
       become: true
 
+    ## fail2ban ##########################################################
+
+    - name: install fail2ban
+      apt:
+        name: fail2ban
+        state: latest
+      become: true
 
     ## freddie work ##########################################################
 
