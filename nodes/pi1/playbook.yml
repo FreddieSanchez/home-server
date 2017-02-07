@@ -49,3 +49,12 @@
         name: vim
         state: latest
       become: true
+
+
+    ## freddie work ##########################################################
+
+    - name: Add authorized keys for freddie 
+      authorized_key:
+        user: freddie
+        key: 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAgEAsPgiKxUdXesRh+0KtmS4NqnBxCks+1udDRy/dlICIe/TAdmyRRGh8Lo8f0mMEzeXOX3ITVUxfffjptiJS78ybw7jntbqKoHj9Pl8tD7HSH7vxGKTuTd4/r38FM3z92T8lkC7mUjPPVXnOuh2r3/nuKlMY/pb19iWcPt3ZvGW3HVguw6NhUSmezDjKsC5JwLueMkIIuaqYufpqItzuTSa/K5YOpOAebMkT2EKzXHZd8pvSHL0D9+lpDATm1T3fyN/kJWe3dGX+kU+9KqXrG5WzVRH/ebR7MsZ9+4X0pHrhFqpoP2sctFcHj6v/9HCcaduICoYaktSyHeUoak208s1inN7urNPIiogvn0haTF0Ri1QinTIgahXGra8li2ZRmYPGnZjr3clTyu0C35onBrgAw12HpvPOBPuJWzCXuHzQaetxBtOe5zrEXPpejhnhRTE6kejo33Eyz9qP1bbmXxe/qj+rT+jGNti4oGn4efDHIesEhlomJvz+YKqCe4km3+S+PXui4u6ptFXVo7f1u8wrsdxIF1vOqkjQizSk/HniZX+pckU0CSqSwj7uxKJO/APtBQk4tFTz9JA1u6BxojlD+6qaTl/rgygzwkRxcHbooBGJ5yv5tza09M8XypOQdH5uEcOEIJCUr4VXLQxmr47DcTCTXZ2q0MGH449ZPQ4Ugc='
+      become: true
