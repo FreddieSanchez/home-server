@@ -12,5 +12,5 @@ wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
 iface default inet static
   address {{ ip_address }}/24
   netmask 255.255.255.0
-  gateway 10.0.1.1
+  gateway {{ gateway }}
   dns-nameservers {{ dns_nameservers | join(' ') }}

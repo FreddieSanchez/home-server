@@ -31,6 +31,12 @@
         state: absent
       become: true
 
+    - name: drop openresolv
+      apt:
+        pkg: openresolv
+        state: absent
+      become: true
+
     ## dhcpcd ##########################################################
 
     - name: uninstall dhcpcd
@@ -45,6 +51,11 @@
       apt:
         name: ufw
         state: present
+      become: true
+
+    - name: ufw deny
+      ufw:
+        state: reset
       become: true
 
     - name: ufw allow ssh
