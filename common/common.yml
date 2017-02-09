@@ -93,7 +93,7 @@
     ## Disable X11 window Manager #######################################
     
     - name: Turn off X11 start up
-        command: systemctl set-default multi-user.target
+      command: systemctl set-default multi-user.target
       become: true
       
 

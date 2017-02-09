@@ -9,7 +9,8 @@ allow-hotplug wlan0
 iface wlan0 inet manual
 wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
 
-iface default inet static
+auto eth0
+iface eth0 inet static
   address {{ ip_address }}/24
   netmask 255.255.255.0
   gateway {{ gateway }}
