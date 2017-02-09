@@ -17,7 +17,30 @@
         port: 60000:61000
         proto: tcp
       become: true
+      
+    
+    ## plexserver ###########################################################     
+    #https://www.element14.com/community/community/raspberry-pi/raspberrypi_projects/blog/2016/03/11/a-more-powerful-plex-media-server-using-raspberry-pi-3
+    - name: Adding apt repo key for plexmediaserver
+      apt_key:
+       url: "https://dev2day.de/pms/dev2day-pms.gpg.key"
+       state: present
+      become: true
+     
 
+    - name: Adding apt repo for plexmediaserver
+      apt_repository:
+        repo: deb https://dev2day.de/pms/ jessie main
+        state: present
+        filename: 'plexmediaserver'
+        
+    - name: Update and install plexmediaserver   
+      apt:
+        name: plexmediaserver
+        state: latest
+        default_release: jessie
+        update_cache: yes   
+    
     ## rtorrent ###########################################################
 
     - name: install rtorrent
