@@ -1,4 +1,5 @@
 - hosts: all 
+  sudo: yes
 
   tasks:
 
@@ -70,13 +71,16 @@
         repo: deb https://dev2day.de/pms/ jessie main
         state: present
         filename: 'plexmediaserver'
+
+    - name: Update the cache
+      apt:
+        update_cache: yes
         
     - name: Update and install plexmediaserver   
       apt:
         name: plexmediaserver
-        state: latest
+        state: present 
         default_release: jessie
-        update_cache: yes   
     
     ## rtorrent ###########################################################
 

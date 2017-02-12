@@ -2,7 +2,7 @@
 # Mapping of what hardware MAC addresses should be configured with specific IPs.
 mac_address_mapping:
   "b8:27:eb:26:a4:de":
-    name: thesanch.com
+    name: pi1
     ip: "192.168.1.50"
 
 gateway: "192.168.1.1"

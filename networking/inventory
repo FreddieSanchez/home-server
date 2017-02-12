@@ -1,5 +1,5 @@
 [pis]
-192.168.1.65
+192.168.1.50
 
 [pis:vars]
 ansible_ssh_user=pi
